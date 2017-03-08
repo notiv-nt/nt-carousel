@@ -11,8 +11,6 @@ function NTCarousel(_config) {
 	this.MIN_SLIDER_ITEMS = 0;
 	this.SLIDER_MIDDLE_INDEX = 0;
 
-	this._itemClassname = 'nt-carousel-item';
-
 	this.__init();
 };
 
@@ -34,9 +32,7 @@ NTCarousel.prototype.__init = function() {
 	self.sliderContainer.addEventListener('click', function(e) {
 		let target = e.target;
 
-		console.dir(target.parentNode === self.sliderContainer);
-
-		if (target && target.classList.contains(self._itemClassname)) {
+		if (target.parentNode === self.sliderContainer) {
 			let relativeIndex = target.getAttribute('data-index');
 
 			if (relativeIndex) {
@@ -98,7 +94,7 @@ NTCarousel.prototype.__setSlides = function() {
 	}
 
 	else if (self.sliderIndex >= self.sliderContainer.children.length) {
-		self.sliderIndex = 0;
+		self.sliderIndex = self.sliderIndex - self.sliderContainer.children.length;
 	}
 
 	self.sliderContainer.children[self.sliderIndex].classList.add('is-current');

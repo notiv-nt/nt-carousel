@@ -62,6 +62,7 @@ header::before {
 	background-color: rgba(0, 0, 0, .9);
 	line-height: 380px;
 	font-family: Verdana, sans-serif;
+	user-select: none;
 }
 
 .slider-item.is-prev-3,
