@@ -3,6 +3,16 @@
 	box-sizing: border-box;
 }
 
+html {
+	font-size: 24px;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	font-weight: 100 !important;
+	color: white;
+	text-align: center;
+	font-family: Verdana, sans-serif;
+}
+
 body {
 	margin: 0;
 	min-height: 100vh;
@@ -10,10 +20,12 @@ body {
 }
 
 header {
-	height: 650px;
+	padding-bottom: 500px;
+	padding-top: 200px;
 	background: url('http://unsplash.it/600/400') no-repeat bottom;
 	background-size: cover;
 	position: relative;
+	color: white;
 }
 
 header::before {
@@ -27,6 +39,14 @@ header::before {
 	bottom: 0;
 }
 
+header > * {
+	position: relative;
+	z-index: 1;
+}
+
+h1 {
+	font: inherit;
+}
 
 
 
@@ -47,21 +67,16 @@ header::before {
 	top: 0;
 	object-fit: cover;
 	object-position: center;
-	transition: left .3s, transform .3s, top .3s;
+	transition: left, transform, top;
 	display: none;
 	will-change: left, top, transform;
+	transition-duration: 400ms;
+	transition-timing-function: cubic-bezier(0, 0.5, 0.1, 1.1);
 }
 
 .slider-text {
-	font-size: 24px;
-	letter-spacing: 2.4px;
-	text-transform: uppercase;
-	font-weight: 100;
-	color: white;
-	text-align: center;
 	background-color: rgba(0, 0, 0, .9);
 	line-height: 380px;
-	font-family: Verdana, sans-serif;
 	user-select: none;
 }
 
