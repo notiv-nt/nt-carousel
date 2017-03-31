@@ -9,15 +9,20 @@
 	} else {
 		// Script tag import i.e., IIFE
 		root.NTCarousel = factory();
-  }
+	}
 }(this, function() {
+	const __init = Symbol('__init');
+	const __fitChildren = Symbol('__fitChildren');
+	const __setSlides = Symbol('__setSlides');
+
 
 	function NTCarousel(_config) {
 		this.config = Object.assign({
 			slidesToShow: 5,
 			infinite: true,
 			itemsClick: true,
-			el: null
+			el: null,
+			initialIndex: 0
 		}, _config);
 
 		this.sliderContainer = null;
@@ -25,50 +30,60 @@
 		this.MIN_SLIDER_ITEMS = 0;
 		this.SLIDER_MIDDLE_INDEX = 0;
 
-		this.__init();
+		this[__init]();
 	};
 
 
 	/* Private */
-	NTCarousel.prototype.__init = function() {
+	NTCarousel.prototype[__init] = function() {
 		let self = this;
 
 		self.sliderContainer = document.querySelector(self.config.el);
 
-		self.sliderIndex = 0;
+		self.sliderIndex = self.config.initialIndex || 0;
 
 		self.MIN_SLIDER_ITEMS = self.config.slidesToShow + 4;
 		self.SLIDER_MIDDLE_INDEX = Math.ceil(self.config.slidesToShow / 2);
 
-		self.__fitChildren();
-		self.__setSlides();
+		// set data-index attr
+		for (let i = 0, len = self.sliderContainer.children.length; i < len; i++) {
+			let child = self.sliderContainer.children[i];
+
+			child.setAttribute('data-index', i);
+		}
+
+		if (this.config.infinite) {
+			self[__fitChildren]();
+		}
+
+		self[__setSlides](true);
 
 		if (self.config.itemsClick) {
 			self.sliderContainer.addEventListener('click', function(e) {
 				let target = e.target;
 
 				if (target.parentNode === self.sliderContainer) {
-					let relativeIndex = target.getAttribute('data-index');
+					let relativeIndex = target.getAttribute('data-slide-index');
 
 					if (relativeIndex) {
 						relativeIndex = parseInt(relativeIndex);
 					}
 
 					self.sliderIndex += relativeIndex;
-					self.__setSlides();
+					self[__setSlides]();
 				}
 			});
 		}
 	};
 
-	NTCarousel.prototype.__fitChildren = function() {
+	NTCarousel.prototype[__fitChildren] = function() {
 		let self = this;
 
 		let originalSlides = [];
 		let childrenLength = self.sliderContainer.children.length;
 
 		// first, we need all of our original items
-		for (let i = 1, len = childrenLength; i <= len; i++) {
+		for (let i = 0, len = childrenLength; i < len; i++) {
 			let child = self.sliderContainer.children[i];
 
 			originalSlides.push(child);
@@ -87,8 +102,28 @@
 		}
 	};
 
-	NTCarousel.prototype.__setSlides = function() {
+	NTCarousel.prototype[__setSlides] = function(pass) {
 		let self = this;
+
+		if (self.sliderIndex < 0) {
+			if (!this.config.infinite) {
+				return self.sliderIndex = 0;
+			}
+
+			else {
+				self.sliderIndex = self.sliderContainer.children.length + self.sliderIndex;
+			}
+		}
+
+		else if (self.sliderIndex >= self.sliderContainer.children.length) {
+			if (!this.config.infinite) {
+				return self.sliderIndex = self.sliderContainer.children.length - 1;
+			}
+
+			else {
+				self.sliderIndex = self.sliderIndex - self.sliderContainer.children.length;
+			}
+		}
 
 		// first, we need to reset classes:
 		let classesToRemove = ['is-current'];
@@ -102,15 +137,8 @@
 			let slide = self.sliderContainer.children[i];
 
 			slide.classList.remove.apply(slide.classList, classesToRemove);
-			slide.removeAttribute('data-index');
-		}
-
-		if (self.sliderIndex < 0) {
-			self.sliderIndex = self.sliderContainer.children.length + self.sliderIndex;
-		}
-
-		else if (self.sliderIndex >= self.sliderContainer.children.length) {
-			self.sliderIndex = self.sliderIndex - self.sliderContainer.children.length;
+			// slide.removeAttribute('data-index');
+			slide.removeAttribute('data-slide-index');
 		}
 
 		self.sliderContainer.children[self.sliderIndex].classList.add('is-current');
@@ -118,25 +146,40 @@
 		// prev:
 		for (let i = 1, prevIndex = self.sliderIndex - 1; i <= self.SLIDER_MIDDLE_INDEX; i++, prevIndex--) {
 			if (prevIndex < 0) {
+				if (!this.config.infinite) {
+					break;
+				}
+
 				prevIndex = self.sliderContainer.children.length - 1;
 			}
 
 			let item = self.sliderContainer.children[prevIndex];
 
 			item.classList.add(`is-prev-${i}`);
-			item.setAttribute('data-index', i * -1);
+			item.setAttribute('data-slide-index', i * -1);
 		}
 
 		// next:
 		for (let i = 1, nextIndex = self.sliderIndex + 1; i <= self.SLIDER_MIDDLE_INDEX; i++, nextIndex++) {
 			if (nextIndex >= self.sliderContainer.children.length) {
+				if (!this.config.infinite) {
+					break;
+				}
+
 				nextIndex = 0;
 			}
 
 			let item = self.sliderContainer.children[nextIndex];
 
 			item.classList.add(`is-next-${i}`);
-			item.setAttribute('data-index', i);
+			item.setAttribute('data-slide-index', i);
+		}
+
+		if (isFunction(self.config.afterSlide) && !pass) {
+			self.config.afterSlide(
+				self.sliderIndex,
+				self.sliderContainer.children[self.sliderIndex]
+			);
 		}
 	};
 
@@ -146,15 +189,22 @@
 		let self = this;
 
 		self.sliderIndex++;
-		self.__setSlides();
+		self[__setSlides]();
 	};
 
 	NTCarousel.prototype.prev = function() {
 		let self = this;
 
 		self.sliderIndex--;
-		self.__setSlides();
+		self[__setSlides]();
 	};
+
+
+	// helpers:
+	function isFunction(functionToCheck) {
+		let getType = {};
+		return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+	}
 
 
 	return NTCarousel;

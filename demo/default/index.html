@@ -22,11 +22,12 @@
 			<img src="http://unsplash.it/g/670/350/?random" class="slider-item">
 			<div class="slider-item slider-text">Some text</div>
 			<img src="http://unsplash.it/g/670/360/?random" class="slider-item">
-			<img src="http://unsplash.it/g/670/370/?random" class="slider-item">
+
+			<!-- <img src="http://unsplash.it/g/670/370/?random" class="slider-item">
 			<img src="http://unsplash.it/g/670/380/?random" class="slider-item">
 			<img src="http://unsplash.it/g/660/380/?random" class="slider-item">
 			<img src="http://unsplash.it/g/650/380/?random" class="slider-item">
-			<img src="http://unsplash.it/g/640/380/?random" class="slider-item">
+			<img src="http://unsplash.it/g/640/380/?random" class="slider-item"> -->
 
 		</div>
 
@@ -36,7 +37,21 @@
 
 	<script>
 		let ntSlider = new NTCarousel({
-			el: '#slider'
+			el: '#slider',
+
+			// infinite: false,
+
+			initialIndex: 1,
+
+			// later
+			beforeSlide: function(index) {
+				console.log('on before slide', index);
+				return true;
+			},
+
+			afterSlide: function(index, elem) {
+				console.log('on after slide', index, elem);
+			}
 		});
 
 		// DEMO, use S F as nav keys
