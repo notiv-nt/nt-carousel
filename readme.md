@@ -9,7 +9,7 @@
 ### Use:
 
 ```
-wrapper
+wrapper#our-slider
   slider element
   slider element
   slider element
