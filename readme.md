@@ -1,9 +1,9 @@
 # Just a nice carousel
 
 ### Demo:
-https://notiv-nt.github.io/nt-carousel/demo/plain/
-https://notiv-nt.github.io/nt-carousel/demo/perspective/
-https://notiv-nt.github.io/nt-carousel/demo/one-page/
+- https://notiv-nt.github.io/nt-carousel/demo/plain/
+- https://notiv-nt.github.io/nt-carousel/demo/perspective/
+- https://notiv-nt.github.io/nt-carousel/demo/one-page/
 
 
 ### Use:
