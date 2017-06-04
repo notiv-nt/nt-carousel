@@ -1,10 +1,10 @@
 {
   "name": "nt-carousel",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "scripts": {
     "build": "./node_modules/.bin/uglifyjs ./src/nt-carousel.js -o dist/nt-carousel.js -c"
   },
-  "description": "",
+  "description": "Plain js centered carousel",
   "main": "dist/nt-carousel.js",
   "repository": {
     "type": "git",
@@ -16,5 +16,8 @@
   "homepage": "https://github.com/notiv-nt/nt-carousel#readme",
   "devDependencies": {
     "uglify-es": "^3.0.15"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
