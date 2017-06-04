@@ -1,6 +1,9 @@
 {
   "name": "nt-carousel",
   "version": "1.0.0",
+  "scripts": {
+    "build": "./node_modules/.bin/uglifyjs ./src/nt-carousel.js -o dist/nt-carousel.js -c"
+  },
   "description": "",
   "main": "dist/nt-carousel.js",
   "repository": {
@@ -10,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/notiv-nt/nt-carousel/issues"
   },
-  "homepage": "https://github.com/notiv-nt/nt-carousel#readme"
+  "homepage": "https://github.com/notiv-nt/nt-carousel#readme",
+  "devDependencies": {
+    "uglify-es": "^3.0.15"
+  }
 }

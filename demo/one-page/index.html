@@ -2,54 +2,72 @@
 <html lang="en">
 <head>
 
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-	<title>Document</title>
+  <title>Document</title>
 
-	<link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="main.css">
 
 </head>
 <body>
 
-	<div id="slider">
+  <div id="slider">
 
-		<section>Scroll by section #1</section>
-		<section>Scroll by section #2</section>
-		<section>Scroll by section #3</section>
-		<section>Scroll by section #4</section>
-		<section>Scroll by section #5</section>
-		<section>Scroll by section #6</section>
+    <section>Scroll by section #1</section>
+    <section>Scroll by section #2</section>
+    <section>Scroll by section #3</section>
+    <section>Scroll by section #4</section>
+    <section>Scroll by section #5</section>
+    <section>Scroll by section #6</section>
 
-	</div>
+  </div>
 
-	<script src="../../dist/nt-carousel.js"></script>
+  <script src="../../src/nt-carousel.js"></script>
 
-	<script>
-		let ntSlider = new NTCarousel({
-			el: '#slider',
-			slidesToShow: 3,
-			itemsClick: false
-		});
+  <script>
+    let ntSlider = new NTCarousel({
+      el: '#slider',
+      slidesToShow: 3,
+      // can use
+      // infinite: false,
+      itemsClick: false
+    });
 
-		document.addEventListener('click', function(e) {
-			document.body.classList.toggle('is-full');
-		});
+    document.addEventListener('click', function(e) {
+      document.body.classList.toggle('is-full');
+    });
 
-		document.addEventListener('mousewheel', function(e) {
-			let delta = e.deltaY;
+    // DEMO, scroll by mousewheel
+    document.addEventListener('mousewheel', function(e) {
+      let delta = e.deltaY;
 
-			if (delta > 0) {
-				ntSlider.next();
-			}
+      if (delta > 0) {
+        ntSlider.next();
+      }
 
-			else if (delta < 0) {
-				ntSlider.prev();
-			}
-		});
+      else if (delta < 0) {
+        ntSlider.prev();
+      }
+    });
 
-	</script>
+    // DEMO, use keys for move slider
+    document.addEventListener('keydown', function(e) {
+      let code = e.keyCode;
+
+      console.log(code);
+
+      if (code === 69) {
+        ntSlider.prev();
+      }
+
+      else if (code === 68) {
+        ntSlider.next();
+      }
+    });
+
+  </script>
 
 </body>
 </html>

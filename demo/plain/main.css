@@ -1,0 +1,31 @@
+html {
+  font: 20px Arial, sans-serif;
+}
+
+img {
+  border: 2px solid black;
+}
+
+#slider {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#slider > * {
+  display: block;
+  margin: 5px;
+  padding: 4px 8px;
+  // background-color: #F6F6F6;
+}
+
+.is-current {
+  background-color: #4EFF00;
+}
+
+.is-prev-1 { background-color: #FC5959; }
+.is-prev-2 { background-color: #FF8282; }
+.is-prev-3 { background-color: #FBCFCF; }
+
+.is-next-1 { background-color: #7979E4; }
+.is-next-2 { background-color: #9F9FF3; }
+.is-next-3 { background-color: #D6D6F6; }
