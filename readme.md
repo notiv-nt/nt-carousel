@@ -1,4 +1,4 @@
-## Just a nice carousel
+# Just a nice carousel
 
 ### Demo:
 https://notiv-nt.github.io/nt-carousel/demo/plain/
