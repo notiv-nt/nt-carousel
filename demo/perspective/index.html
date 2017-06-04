@@ -15,19 +15,13 @@
 
   <header>
 
-    <h1>Use your "S" and "F" keys to move this slider, or click on the slide item</h1>
+    <h1>Use "S" and "F" keys, scroll or click on the slide item</h1>
 
     <div id="slider">
 
       <img src="http://unsplash.it/670/350/?random" class="slider-item">
       <div class="slider-item slider-text">Text block</div>
       <img src="http://unsplash.it/670/360/?random" class="slider-item">
-
-      <!-- <img src="http://unsplash.it/g/670/370/?random" class="slider-item">
-      <img src="http://unsplash.it/g/670/380/?random" class="slider-item">
-      <img src="http://unsplash.it/g/660/380/?random" class="slider-item">
-      <img src="http://unsplash.it/g/650/380/?random" class="slider-item">
-      <img src="http://unsplash.it/g/640/380/?random" class="slider-item"> -->
 
     </div>
 
@@ -40,8 +34,9 @@
       el: '#slider',
 
       // infinite: false,
+      slidesCount: 4,
 
-      initialIndex: 1,
+      initialIndex: 0,
 
       // later
       beforeSlide: function(index) {
@@ -51,6 +46,18 @@
 
       afterSlide: function(index, elem) {
         console.log('on after slide', index, elem);
+      }
+    });
+
+    document.addEventListener('mousewheel', function(e) {
+      let delta = e.deltaY;
+
+      if (delta > 0) {
+        ntSlider.next();
+      }
+
+      else if (delta < 0) {
+        ntSlider.prev();
       }
     });
 

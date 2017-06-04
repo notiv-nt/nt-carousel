@@ -45,7 +45,7 @@
 
     self.sliderIndex = self.config.initialIndex || 0;
 
-    self.MIN_SLIDER_ITEMS = self.config.slidesCount + 2;
+    self.MIN_SLIDER_ITEMS = (self.config.slidesCount * 2) + 1;
     self.SLIDER_MIDDLE_INDEX = Math.ceil(self.config.slidesCount);
 
     // set data-index attr
